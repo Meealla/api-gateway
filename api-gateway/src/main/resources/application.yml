@@ -1,0 +1,17 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: resume-analyzer-route
+          uri: http://localhost:8081
+          predicates:
+            - Path=/analyzer/**
+          filters:
+            - RewritePath=/analyzer/(?<segment>.*), /${segment}
+
+        - id: resume-generator-route
+          uri: http://localhost:8082
+          predicates:
+            - Path=/generator/**
+          filters:
+            - RewritePath=/generator/(?<segment>.*), /${segment}
