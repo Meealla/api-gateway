@@ -1,5 +1,6 @@
 package ru.javabegin.micro.planner.apigateway.infrastructure.controller;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +14,7 @@ public class ApiGatewayApplicationTest {
   private WebTestClient webTestClient;
 
   @Test
+  @DisplayName("Тест для конечной точки анализатора")
   public void testAnalyzerRoute() {
     webTestClient.get().uri("/analyzer/hobbies")
       .exchange()
@@ -20,6 +22,7 @@ public class ApiGatewayApplicationTest {
   }
 
   @Test
+  @DisplayName("Тест для конечной точки генератора")
   public void testGeneratorRoute() {
     webTestClient.get().uri("/generator/templates")
       .exchange()
