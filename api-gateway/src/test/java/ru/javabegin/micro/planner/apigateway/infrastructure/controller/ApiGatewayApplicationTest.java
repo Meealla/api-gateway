@@ -9,24 +9,23 @@ import webapp.apigateway.ApiGatewayApplication;
 
 @SpringBootTest(classes = ApiGatewayApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ApiGatewayApplicationTest {
+    @Autowired
+    private WebTestClient webTestClient;
 
-  @Autowired
-  private WebTestClient webTestClient;
-
-  @Test
-  @DisplayName("Тест для конечной точки анализатора")
-  public void testAnalyzerRoute() {
-    webTestClient.get().uri("/analyzer/hobbies")
+    @Test
+    @DisplayName("Тест для конечной точки анализатора")
+    public void testAnalyzerRoute() {
+        webTestClient.get().uri("/analyzer/hobbies")
       .exchange()
       .expectStatus().isOk();
-  }
+    }
 
-  @Test
-  @DisplayName("Тест для конечной точки генератора")
-  public void testGeneratorRoute() {
-    webTestClient.get().uri("/generator/templates")
+    @Test
+    @DisplayName("Тест для конечной точки генератора")
+    public void testGeneratorRoute() {
+        webTestClient.get().uri("/generator/templates")
       .exchange()
       .expectStatus().isOk();
-  }
+    }
 }
 
