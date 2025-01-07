@@ -1,9 +1,11 @@
+server:
+  port: 8765
 spring:
   cloud:
     gateway:
       routes:
         - id: resume-analyzer-route
-          uri: http://localhost:8081
+          uri: http://localhost:8083
           predicates:
             - Path=/analyzer/**
           filters:
