@@ -4,12 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Класс, представляющий аналитические данные для сбора информации о запросах и ответах.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class AnalyticsData {
+
     /**
-     *
+     * Временная метка события.
      */
     private String timestamp;
 

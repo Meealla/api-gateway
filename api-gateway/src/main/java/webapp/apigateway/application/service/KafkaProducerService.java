@@ -8,20 +8,48 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import webapp.apigateway.domain.model.AnalyticsData;
 
+/**
+ * Сервис для отправки данных в Kafka.
+ */
 @Service
 public class KafkaProducerService {
+    /**
+     * Логгер для записи информации.
+     */
     private static final Logger logger = LoggerFactory.getLogger(KafkaProducerService.class);
 
+    /**
+     * Название топика Kafka для аналитических данных.
+     */
     @Value("${kafka.topic.analytics}")
     private String analyticsTopic;
+
+    /**
+     * KafkaTemplate для отправки сообщений в Kafka.
+     */
     private final KafkaTemplate<String, String> kafkaTemplate;
+
+    /**
+     * ObjectMapper для преобразования объектов в формат JSON.
+     */
     private final ObjectMapper objectMapper;
 
+    /**
+     * Конструктор для внедрения зависимостей.
+     *
+     * @param kafkaTemplate для отправки сообщений.
+     * @param objectMapper для сериализации данных.
+     */
     public KafkaProducerService(KafkaTemplate<String, String> kafkaTemplate, ObjectMapper objectMapper) {
         this.kafkaTemplate = kafkaTemplate;
         this.objectMapper = objectMapper;
     }
 
+    /**
+     * Отправляет данные в Kafka.
+     *
+     * @param data объект типа AnalyticsData.
+     */
     public void sendToKafka(AnalyticsData data) {
         try {
             String jsonData = objectMapper.writeValueAsString(data);

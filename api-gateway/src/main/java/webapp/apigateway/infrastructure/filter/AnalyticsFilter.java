@@ -10,14 +10,34 @@ import reactor.core.publisher.Mono;
 import webapp.apigateway.application.service.KafkaProducerService;
 import webapp.apigateway.domain.model.AnalyticsData;
 
+/**
+ * Фильтр для сбора аналитических данных в API Gateway.
+ * Реализует интерфейс GatewayFilter для обработки запросов и ответов.
+ */
 @Component
 public class AnalyticsFilter implements GatewayFilter {
+
+    /**
+     * Сервис для отправки аналитических данных в Kafka.
+     */
     private final KafkaProducerService kafkaProducerService;
 
+    /**
+     * Конструктор для внедрения зависимости KafkaProducerService.
+     *
+     * @param kafkaProducerService сервис для отправки данных в Kafka.
+     */
     public AnalyticsFilter(KafkaProducerService kafkaProducerService) {
         this.kafkaProducerService = kafkaProducerService;
     }
 
+  /**
+   * Метод фильтрации запросов и ответов.
+   *
+   * @param exchange текущий веб-обмен.
+   * @param chain цупочка фильтров для продолжения обработки.
+   * @return сигнал завершения обработки.
+   */
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         Instant start = Instant.now();
