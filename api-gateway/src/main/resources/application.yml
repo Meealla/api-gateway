@@ -1,5 +1,6 @@
 server:
   port: 8765
+
 spring:
   cloud:
     gateway:
@@ -17,3 +18,14 @@ spring:
             - Path=/generator/**
           filters:
             - RewritePath=/generator/(?<segment>.*), /${segment}
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: analytics-group
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    topic:
+      analytics: analytics-topic
+

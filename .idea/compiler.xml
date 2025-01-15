@@ -9,7 +9,13 @@
         </processorPath>
         <module name="resume-analyzer.main" />
         <module name="resume-generator.main" />
+        <module name="api-gateway.main" />
       </profile>
     </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="api-gateway.test" options="--add-exports java.base/jdk.internal.org.objectweb.asm.util=ALL-UNNAMED --add-exports jdk.jfr/jdk.jfr.internal.jfc.model=ALL-UNNAMED --add-exports java.base/jdk.internal.classfile.impl.verifier=ALL-UNNAMED" />
+    </option>
   </component>
 </project>
