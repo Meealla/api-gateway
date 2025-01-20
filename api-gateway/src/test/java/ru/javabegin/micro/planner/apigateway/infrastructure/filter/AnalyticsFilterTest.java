@@ -1,5 +1,6 @@
 package ru.javabegin.micro.planner.apigateway.infrastructure.filter;
 
+import org.example.analyticsmessage.domain.model.MessageDTO;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
@@ -10,7 +11,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import webapp.apigateway.ApiGatewayApplication;
 import webapp.apigateway.application.service.KafkaProducerService;
-import webapp.apigateway.domain.model.AnalyticsData;
 
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
@@ -31,9 +31,9 @@ public class AnalyticsFilterTest {
 
     @Test
     public void testAnalyticsFilter() throws Exception {
-        doNothing().when(kafkaProducerService).sendToKafka(ArgumentMatchers.any(AnalyticsData.class));
+        doNothing().when(kafkaProducerService).sendToKafka(ArgumentMatchers.any(MessageDTO.class));
         mockMvc.perform(get("/status"))
                 .andExpect(status().isOk());
-        verify(kafkaProducerService, times(1)).sendToKafka(any(AnalyticsData.class));
+        verify(kafkaProducerService, times(1)).sendToKafka(any(MessageDTO.class));
     }
 }
