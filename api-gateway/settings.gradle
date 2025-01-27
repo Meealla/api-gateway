@@ -1,4 +1,6 @@
 rootProject.name = 'api-gateway'
 
-includeBuild("C:/Users/Настюша/resume-analyzer-backend1/resume-analyzer")
-includeBuild("C:/Users/Настюша/resume-analyzer-backend1/resume-generator")
+includeBuild("../../../IdeaProjects/resume-analyzer-backend/resume-analyzer")
+includeBuild("../../../IdeaProjects/resume-analyzer-backend/resume-generator")
+includeBuild("../../../IdeaProjects/resume-analyzer-backend/analytics-message")
+

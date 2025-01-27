@@ -1,12 +1,12 @@
 package webapp.apigateway.application.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.analyticsmessage.domain.model.MessageDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import webapp.apigateway.domain.model.AnalyticsData;
 
 /**
  * Сервис для отправки данных в Kafka.
@@ -48,9 +48,9 @@ public class KafkaProducerService {
     /**
      * Отправляет данные в Kafka.
      *
-     * @param data объект типа AnalyticsData.
+     * @param data объект типа MessageDTO.
      */
-    public void sendToKafka(AnalyticsData data) {
+    public void sendToKafka(MessageDTO data) {
         try {
             String jsonData = objectMapper.writeValueAsString(data);
             kafkaTemplate.send(analyticsTopic, jsonData);  // Отправка в Kafka
