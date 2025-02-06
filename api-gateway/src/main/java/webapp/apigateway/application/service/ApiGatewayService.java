@@ -21,13 +21,12 @@ public class ApiGatewayService {
 
     public <T> Mono<List<T>> makeRequest(String uri, Class<T> elementClass) {
         WebClient webClient = WebClient.create();
-        Mono<List<T>> response = webClient.get()
+
+        return webClient.get()
                 .uri(uri)
                 .retrieve()
                 .bodyToFlux(elementClass)
                 .collectList();
-
-        return response;
     }
 
     public Mono<List<ResumeWithTemplate>> getListOfResumeWithTemplates(Department department) {
