@@ -12,23 +12,48 @@ import webapp.resumegenerator.domain.model.Template;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Сервис для получения Резюме с соответствущими Шаблонами
+ */
 
 @Service
 public class ApiGatewayService {
 
-    public Mono<List<ResumeWithTemplate>> getListOfResumeWithTemplates() {
+    public <T> Mono<List<T>> makeRequest(String uri, Class<T> elementClass) {
         WebClient webClient = WebClient.create();
-        Mono<List<Template>> templates = webClient.get()
-                .uri("http://localhost:8765/generator/templates/all")
+        Mono<List<T>> response = webClient.get()
+                .uri(uri)
                 .retrieve()
-                .bodyToFlux(Template.class)
+                .bodyToFlux(elementClass)
                 .collectList();
 
-        Mono<List<Resume>> resumes = webClient.get()
-                .uri("http://localhost:8765/analyzer/resumes/all")
-                .retrieve()
-                .bodyToFlux(Resume.class)
-                .collectList();
+        return response;
+    }
+
+    public Mono<List<ResumeWithTemplate>> getListOfResumeWithTemplates(Department department) {
+
+        Mono<List<Template>> templates = makeRequest("http://localhost:8765/generator/templates/all?department=" + department, Template.class);
+        Mono<List<Resume>> resumes = makeRequest("http://localhost:8765/analyzer/resumes/all?department=" + department, Resume.class);
+
+        return Mono.zip(resumes, templates)
+                .map(tuple -> {
+                    List<ResumeWithTemplate> result = new ArrayList<>();
+                    for (Resume resume : tuple.getT1()) {
+                        result.add(new ResumeWithTemplate(resume));
+                        for (Template template : tuple.getT2()) {
+                            result.getLast().addTemplate(template);
+                        }
+                    }
+                    return result;
+                });
+
+
+    }
+
+    public Mono<List<ResumeWithTemplate>> getListOfResumeWithTemplates() {
+
+        Mono<List<Template>> templates = makeRequest("http://localhost:8765/generator/templates/all", Template.class);
+        Mono<List<Resume>> resumes = makeRequest("http://localhost:8765/analyzer/resumes/all", Resume.class);
 
         return Mono.zip(resumes, templates)
                 .map(tuple -> {
@@ -43,34 +68,6 @@ public class ApiGatewayService {
                     }
                     return result;
                 });
-
     }
 
-    public Mono<List<ResumeWithTemplate>> getListOfResumeWithTemplates(Department department) {
-        WebClient webClient = WebClient.create();
-        Mono<List<Template>> templates = webClient.get()
-                .uri("http://localhost:8765/generator/templates/all?department=" + department)
-                .retrieve()
-                .bodyToFlux(Template.class)
-                .collectList();
-
-        Mono<List<Resume>> resumes = webClient.get()
-                .uri("http://localhost:8765/analyzer/resumes/all?department=" + department)
-                .retrieve()
-                .bodyToFlux(Resume.class)
-                .collectList();
-
-        return Mono.zip(resumes, templates)
-                .map(tuple -> {
-                    List<ResumeWithTemplate> result = new ArrayList<>();
-                    for (Resume resume : tuple.getT1()) {
-                        result.add(new ResumeWithTemplate(resume));
-                        for (Template template : tuple.getT2()) {
-                            result.getLast().addTemplate(template);
-                        }
-                    }
-                    return result;
-                });
-
-    }
 }

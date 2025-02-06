@@ -9,6 +9,10 @@ import webapp.resumegenerator.domain.model.Template;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * POJO для вывода резюме с соответствующими Шаблонами
+ */
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
