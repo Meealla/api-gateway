@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
-import webapp.apigateway.application.service.ApiGatewayService;
+import webapp.apigateway.application.service.ApiGatewayServiceImpl;
 import webapp.apigateway.domain.model.Department;
 import webapp.apigateway.domain.model.ResumeWithTemplate;
 
@@ -18,11 +18,11 @@ import java.util.List;
 @RestController
 public class GatewayController {
 
-    private ApiGatewayService apiGatewayService;
+    private ApiGatewayServiceImpl apiGatewayServiceImpl;
 
     @Autowired
-    public GatewayController(ApiGatewayService apiGatewayService) {
-        this.apiGatewayService = apiGatewayService;
+    public GatewayController(ApiGatewayServiceImpl apiGatewayServiceImpl) {
+        this.apiGatewayServiceImpl = apiGatewayServiceImpl;
     }
 
     /**
@@ -42,9 +42,9 @@ public class GatewayController {
     public ResponseEntity<Mono<List<ResumeWithTemplate>>> getAllResume(
             @RequestParam(value = "department", required = false) Department department) {
         if (department == null) {
-            return ResponseEntity.ok(apiGatewayService.getListOfResumeWithTemplates());
+            return ResponseEntity.ok(apiGatewayServiceImpl.getListOfResumeWithTemplates());
         } else {
-            return ResponseEntity.ok(apiGatewayService.getListOfResumeWithTemplates(department));
+            return ResponseEntity.ok(apiGatewayServiceImpl.getListOfResumeWithTemplates(department));
         }
     }
 }

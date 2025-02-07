@@ -12,7 +12,6 @@ import java.util.Objects;
 /**
  * POJO для вывода резюме с соответствующими Шаблонами
  */
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

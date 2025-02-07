@@ -1,6 +1,8 @@
 package webapp.apigateway.application.service;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -9,15 +11,13 @@ import webapp.apigateway.domain.model.ResumeWithTemplate;
 import webapp.resumeanalyzer.domain.model.Resume;
 import webapp.resumegenerator.domain.model.Template;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Сервис для получения Резюме с соответствущими Шаблонами
  */
-
 @Service
-public class ApiGatewayService {
+public class ApiGatewayServiceImpl
+{
 
     public <T> Mono<List<T>> makeRequest(String uri, Class<T> elementClass) {
         WebClient webClient = WebClient.create();
@@ -46,7 +46,6 @@ public class ApiGatewayService {
                     return result;
                 });
 
-
     }
 
     public Mono<List<ResumeWithTemplate>> getListOfResumeWithTemplates() {
@@ -68,5 +67,4 @@ public class ApiGatewayService {
                     return result;
                 });
     }
-
 }
