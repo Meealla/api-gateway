@@ -11,7 +11,6 @@ import webapp.apigateway.domain.model.ResumeWithTemplate;
 import webapp.resumeanalyzer.domain.model.Resume;
 import webapp.resumegenerator.domain.model.Template;
 
-
 /**
  * Сервис для получения Резюме с соответствущими Шаблонами
  */
@@ -45,7 +44,6 @@ public class ApiGatewayServiceImpl
                     }
                     return result;
                 });
-
     }
 
     public Mono<List<ResumeWithTemplate>> getListOfResumeWithTemplates() {
